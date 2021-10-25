@@ -20,8 +20,6 @@ class PyList:
         raise IndexError("PyList index out of range")
     
     def __setitem__(self,index,val):
-        raise NotImplementedError
-
         if index < self.numItems:
         	self.items[index] = val
         return
@@ -136,7 +134,27 @@ class PyList:
 
     def resetAppend(self):
         self.appendCounter = 0
-        
+    
+    def swap(self,i,j):
+        if i >= self.numItems or j >= self.numItems:
+            raise IndexError
+        elif i == j:
+            return
+        else:
+            j2 = self.items[j]
+            self.items[j] = self.items[i]
+            self.items[i] = j2
+            return
+    
+    def isSorted(self):
+        for i in range(0,self.numItems-1,2): 
+            for j in range(1,self.numItems,2):
+                if self.items[i] > self.items[j]:
+                    print(self.items[i])
+                    print(self.items[j])
+                    return False
+
+        return True
                 
 def main():
     lst = PyList()
@@ -217,5 +235,25 @@ def main():
     print(lst)
     print(lst4)
     
+    lst.swap(1,99)
+
+    if lst[1] == 99 and lst[99] == 0:
+        print("Test 11 Passed")
+    else:
+        print("Test 11 Failed")
+
+    print(lst)
+    lst.append(1)
+    lst.swap(100,101)
+    lst.swap(0,1)
+    lst.swap(0,99)
+    
+
+    if lst.isSorted == False:
+        print("Test 12 Passed")
+    else:
+        print("Test 12 Failed")
+    print(lst)
+
 if __name__ == "__main__":
     main()
