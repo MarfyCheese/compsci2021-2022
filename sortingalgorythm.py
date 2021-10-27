@@ -1,3 +1,5 @@
+import random 
+
 class PyList:
     def __init__(self,contents=[], size=10):
         # The contents allows the programmer to construct a list with
@@ -158,6 +160,14 @@ class PyList:
                 if self.items[i] > self.items[i + 1]:
                     self.swap(i,i+1)
 
+def makeAlmostSortedPylist(length,amountSwapped):
+    almostSorted = PyList()
+    for i in range(length):
+        almostSorted.append(i)
+    for i in range(amountSwapped):
+        almostSorted.swap(random.randint(0,len(almostSorted)),random.randint(0,len(almostSorted)))
+    return almostSorted
+
                 
 def main():
     lst = PyList()
@@ -244,7 +254,7 @@ def main():
         print("Test 11 Passed")
     else:
         print("Test 11 Failed")
-        
+
     lst.append(1)
     lst.swap(100,101)
     lst.swap(0,1)
@@ -256,14 +266,14 @@ def main():
         print("Test 12 Passed")
     else:
         print("Test 12 Failed")
-    print(lst)
 
     lst4.bubble_sort()
     if lst4.isSorted():
         print("Test 13 Passed")
     else:
         print("Test 13 Failed")
-    print(lst4)
+
+    print(makeAlmostSortedPylist(100,10))
 
 if __name__ == "__main__":
     main()
