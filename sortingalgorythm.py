@@ -1,4 +1,5 @@
 import random 
+import time 
 
 class PyList:
     def __init__(self,contents=[], size=10):
@@ -164,8 +165,9 @@ def makeAlmostSortedPylist(length,amountSwapped):
     almostSorted = PyList()
     for i in range(length):
         almostSorted.append(i)
-    for i in range(amountSwapped):
-        almostSorted.swap(random.randint(0,len(almostSorted)),random.randint(0,len(almostSorted)))
+    if amountSwapped > 0:
+        for i in range(amountSwapped):
+         almostSorted.swap(random.randint(0,length-1),random.randint(0,length-1))
     return almostSorted
 
                 
@@ -272,8 +274,14 @@ def main():
         print("Test 13 Passed")
     else:
         print("Test 13 Failed")
-
-    print(makeAlmostSortedPylist(100,10))
+    for i in range(1,1001):
+        list12 = makeAlmostSortedPylist(i,20)
+        start = time.thread_time()
+        list12.bubble_sort()
+        stop = time.thread_time() - start
+        with open("bubbletimes.csv","a") as f:	
+            f.write('{},{}\n'.format(i,stop))
+        print(stop)
 
 if __name__ == "__main__":
     main()
