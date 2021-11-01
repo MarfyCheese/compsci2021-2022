@@ -170,7 +170,11 @@ def makeAlmostSortedPylist(length,amountSwapped):
          almostSorted.swap(random.randint(0,length-1),random.randint(0,length-1))
     return almostSorted
 
-                
+def makeRandomPylist(length):
+    randList = list(range(length))
+    random.shuffle(randList)
+    return PyList(randList)
+
 def main():
     lst = PyList()
     
@@ -275,11 +279,11 @@ def main():
     else:
         print("Test 13 Failed")
     for i in range(1,1001):
-        list12 = makeAlmostSortedPylist(i,20)
+        list12 = makeRandomPylist(i)
         start = time.thread_time()
         list12.bubble_sort()
         stop = time.thread_time() - start
-        with open("bubbletimes.csv","a") as f:	
+        with open("randombubbletimes.csv","a") as f:	
             f.write('{},{}\n'.format(i,stop))
         print(stop)
 
