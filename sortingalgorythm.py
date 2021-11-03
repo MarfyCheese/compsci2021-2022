@@ -175,6 +175,14 @@ def makeRandomPylist(length):
     random.shuffle(randList)
     return PyList(randList)
 
+def makeBackwardPyList(length):
+    backward = PyList()
+    for i in range(length,0,-1):
+        backward.append(i)
+    return backward
+
+
+
 def main():
     lst = PyList()
     
@@ -279,11 +287,11 @@ def main():
     else:
         print("Test 13 Failed")
     for i in range(1,1001):
-        list12 = makeRandomPylist(i)
+        list12 = makeBackwardPyList(i)
         start = time.thread_time()
         list12.bubble_sort()
         stop = time.thread_time() - start
-        with open("randombubbletimes.csv","a") as f:	
+        with open("backwardbubbletimes.csv","a") as f:	
             f.write('{},{}\n'.format(i,stop))
         print(stop)
 
