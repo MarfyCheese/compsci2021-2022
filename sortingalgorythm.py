@@ -155,11 +155,35 @@ class PyList:
                 return False
         return True
     
-    def bubble_sort(self):
+    def bubbleSort(self):
         while not self.isSorted():
             for i in range(0,self.numItems-1):
                 if self.items[i] > self.items[i + 1]:
                     self.swap(i,i+1)
+
+    def maxIndex(self,length):
+        bigIndex = 0
+        for i in range(length):
+            if self.items[i] > self.items[bigIndex]:
+                bigIndex = i
+        return bigIndex
+    
+    def minIndex(self, length):
+        smallIndex = 0
+        for i in range(length):
+            if self.items[i] < self.items[smallIndex]:
+                smallIndex = i
+        return smallIndex
+    
+    def insertionSort(self):
+        for i in range(self.numItems - 1,1,-1):
+            index = self.maxIndex(i)
+            if not self.items[index] <= self.items[i]:
+                self.swap(index,i)
+            
+            
+
+
 
 def makeAlmostSortedPylist(length,amountSwapped):
     almostSorted = PyList()
@@ -281,19 +305,30 @@ def main():
     else:
         print("Test 12 Failed")
 
-    lst4.bubble_sort()
+    lst4.bubbleSort()
     if lst4.isSorted():
         print("Test 13 Passed")
     else:
         print("Test 13 Failed")
-    for i in range(1,1001):
-        list12 = makeBackwardPyList(i)
-        start = time.thread_time()
-        list12.bubble_sort()
-        stop = time.thread_time() - start
-        with open("backwardbubbletimes.csv","a") as f:	
-            f.write('{},{}\n'.format(i,stop))
-        print(stop)
+    # for i in range(1,1001):
+        # list12 = makeBackwardPyList(i)
+        # start = time.thread_time()
+        # list12.bubble_sort()
+        # stop = time.thread_time() - start
+        # with open("backwardbubbletimes.csv","a") as f:	
+            # f.write('{},{}\n'.format(i,stop))
+        # print(stop)
+    lst5 = makeBackwardPyList(20)
+
+    if lst4.maxIndex(len(lst4)) == 100:
+        print("Test 14 Passed")
+    else:
+        print("Test 14 Failed")
+    
+    if lst5.maxIndex(len(lst5)) == 0:
+        print("Test 14.1 Passed")
+    else:
+        print("Test 14.1 Failed")
 
 if __name__ == "__main__":
     main()
