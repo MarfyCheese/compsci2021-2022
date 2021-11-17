@@ -331,11 +331,11 @@ def main():
         print("Test 14.1 Failed")
 
     for i in range(1,1001):
-        lst6 = makeAlmostSortedPylist(i,20)
+        lst6 = makeBackwardPyList(i)
         start = time.thread_time()
         lst6.insertionSort()
         stop = time.thread_time() - start
-        with open("almostsortedinsertiontimes.csv","a") as f:	
+        with open("backwardinsertiontimes.csv","a") as f:	
              f.write('{},{}\n'.format(i,stop))
         print(stop)
 
