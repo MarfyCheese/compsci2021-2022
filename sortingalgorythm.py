@@ -24,7 +24,7 @@ class PyList:
     
     def __setitem__(self,index,val):
         if index < self.numItems:
-        	self.items[index] = val
+            self.items[index] = val
         return
          
         raise IndexError("PyList assignment index out of range")
@@ -96,16 +96,16 @@ class PyList:
     # It is only available to the class to use. 
     def __makeroom(self):
         # increase list size by 1/4 to make more room.
-        newlen = (self.size // 4) + self.size + 1
+        newlen = (self.size // 4) + self.size 
         newlst = [None] * newlen
-        for i in range(self.numItems):
+        for i in range(0,len(self.items)):
             newlst[i] = self.items[i]
             
         self.items = newlst
         self.size = newlen        
 
     def append(self,item):
-        if self.numItems == self.size:
+        if self.numItems >= self.size:
             self.__makeroom()
         self.items[self.numItems] = item
         self.numItems += 1
@@ -151,13 +151,16 @@ class PyList:
     
     def isSorted(self):
         for i in range(0,self.numItems-1,2): 
-            if self.items[i] > self.items[i+1]:
-                return False
+            try:
+                if self.items[i] > self.items[i+1]:
+                    return False
+            except:
+                bunger = 1
         return True
     
     def bubbleSort(self):
         while not self.isSorted():
-            for i in range(0,self.numItems-1):
+            for i in range(self.numItems-1):
                 if self.items[i] > self.items[i + 1]:
                     self.swap(i,i+1)
 
@@ -180,10 +183,35 @@ class PyList:
             index = self.maxIndex(i)
             if not self.items[index] <= self.items[i]:
                 self.swap(index,i)
-            
-            
+    
+    def merge(self, other):
+        while other[0] < self.items[-1]:
+            for i in range(len(self.items)):
+                if other[0] < self.items[i]:
+                    self.items.insert(i,other[0])
+                    self.numItems += 1
+                    self.size += 1
+                    del other[0]
+        for i in other:
+            self.append(i)
+    
+    def split(self,index):
+        newList = PyList()
+        for i in range(index):
+            newList.append(self[i])
+            self.numItems - 1
+        return(newList)
 
 
+
+
+    def merge_sort(self):
+        while len(self) > 2:
+            self.split()
+        
+            
+        
+            
 
 def makeAlmostSortedPylist(length,amountSwapped):
     almostSorted = PyList()
@@ -330,14 +358,28 @@ def main():
     else:
         print("Test 14.1 Failed")
 
-    for i in range(1,1001):
-        lst6 = makeBackwardPyList(i)
-        start = time.thread_time()
-        lst6.insertionSort()
-        stop = time.thread_time() - start
-        with open("backwardinsertiontimes.csv","a") as f:	
-             f.write('{},{}\n'.format(i,stop))
-        print(stop)
+    # for i in range(1,1001):
+        # lst6 = makeBackwardPyList(i)
+        # start = time.thread_time()
+        # st6.insertionSort()
+        # stop = time.thread_time() - start
+        # with open("backwardinsertiontimes.csv","a") as f:	
+             # f.write('{},{}\n'.format(i,stop))
+        # print(stop)
+
+    lst7 = PyList()
+    for i in range(0,20,2):
+        lst7.append(i)
+
+    lst8 = PyList()
+    for i in range(1,20,2):
+        lst8.append(i)
+
+    lst7.merge(lst8)
+    if lst7.isSorted() == True:
+        print("Test 15 Passed")
+    else:
+        print("Test 15 Failed")
 
 
 if __name__ == "__main__":
