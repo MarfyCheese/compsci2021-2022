@@ -149,8 +149,7 @@ class LinkedList:
         self.numItems += 1
 
         
-    def __str__(self):
-        # This is left as an exercise for the reader. 
+    def __str__(self): 
         cursor = self.first.getNext()
         outString = "["
         while cursor != None:
@@ -165,24 +164,23 @@ class LinkedList:
         pass              
 
     def split(self,index):
-        cursor = self.first.getNext()
+        cursor = self.first
         newList = LinkedList()
 
-        for i in range(index-1):
+        for i in range(index):
             cursor = cursor.getNext()
         
-        newLast = cursor
-        cursor = cursor.getNext()
-        while cursor != None:
-            newList.append(cursor.getItem())
-            cursor = cursor.getNext()
-        newLast.setNext(None)
+        newList.first.setNext(cursor.getNext())
+        cursor.setNext(None)
+        
+        newList.numItems = self.numItems - index
         self.numItems = index
+
         return newList
 
     def sorted(self):
         cursor = self.first.getNext()
-        while cursor != None:
+        while cursor.getNext() != None:
             prev = cursor.getItem()
             cursor = cursor.getNext()
             if prev > cursor.getItem():
@@ -198,12 +196,12 @@ class LinkedList:
         merged_list = LinkedList()
 
         while cursor_self != None and cursor_other != None:
-            if cursor_self.getItem() > cursor_other.getItem():
+            if cursor_self.getItem() < cursor_other.getItem():
+                merged_list.append(cursor_self.getItem())
+                cursor_self = cursor_self.getNext()
+            else:
                 merged_list.append(cursor_other.getItem())
                 cursor_other = cursor_other.getNext()
-            else:
-                merged_list.append(cursor_self.getItem())
-                cursor_other = cursor_self.getNext()
             
         while cursor_self != None:
             merged_list.append(cursor_self.getItem())
@@ -211,7 +209,7 @@ class LinkedList:
 
         while cursor_other != None:
             merged_list.append(cursor_other.getItem())
-            cursor_self = cursor_other.getNext()
+            cursor_other = cursor_other.getNext()
 
         self.first = merged_list.first
         self.numItems = merged_list.numItems
@@ -219,11 +217,13 @@ class LinkedList:
 
     def merge_sort(self):
         if len(self) < 2:
-            pass
+            return
         else:
-            
-            
-                
+          other = self.split(len(self)//2)
+          self.merge_sort()
+          other.merge_sort()
+          self.merge(other)
+                      
 def main():
     lst = LinkedList()
     
@@ -308,11 +308,14 @@ def main():
     print(lst5)
     print(lst6)
 
-    
+    for i in range(1,10):
+      randList = list(range(i))
+      random.shuffle(randList)
+      randList = LinkedList(randList)
+
+      randList.merge_sort()
+      if randList.sorted() == True:
+        print("Test 11 Passed: {}".format(randList))
+   
 if __name__ == "__main__":
     main()
-                
-            
-            
-        
-            
