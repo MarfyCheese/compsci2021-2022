@@ -1,4 +1,5 @@
 import random 
+import time
 
 class LinkedList:
     
@@ -308,14 +309,16 @@ def main():
     print(lst5)
     print(lst6)
 
-    for i in range(1,10):
+    for i in range(1,100000):
       randList = list(range(i))
       random.shuffle(randList)
       randList = LinkedList(randList)
-
+      start = time.thread_time()
       randList.merge_sort()
-      if randList.sorted() == True:
-        print("Test 11 Passed: {}".format(randList))
+      stop = time.thread_time() - start
+      with open("randomlinkedtimes.csv","a") as f:	
+            f.write('{},{}\n'.format(i,stop))
+      randList.merge_sort()
    
 if __name__ == "__main__":
     main()
